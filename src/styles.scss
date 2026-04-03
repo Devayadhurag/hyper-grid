@@ -1,1 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --surface:                #f7f9fb;
+  --surface-container-low:  #f2f4f6;
+  --surface-container:      #eceef0;
+  --surface-container-lowest: #ffffff;
+  --primary-container:      #131b2e;
+  --tertiary-fixed:         #6ffbbe;
+  --on-surface-variant:     #45464d;
+  --outline-variant:        rgba(198, 198, 205, 0.2);
+  --nav-width-collapsed:    60px;
+  --nav-width-expanded:     200px;
+  --header-height:          48px;
+  --ticker-height:          28px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background: var(--surface);
+  color: var(--primary-container);
+}
+
+app-root {
+  display: flex;
+  height: 100%;
+}

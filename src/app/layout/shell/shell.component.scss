@@ -1,0 +1,278 @@
+/* ── Shell Layout ── */
+.shell {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--surface-container-low);
+}
+
+/* ── Navigation ── */
+.nav {
+  width: var(--nav-width-collapsed);
+  background: var(--primary-container);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+  gap: 2px;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.nav--expanded {
+  width: var(--nav-width-expanded);
+  align-items: flex-start;
+}
+
+/* Logo mark */
+.nav__logo {
+  width: var(--nav-width-collapsed);
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.nav__logo-mark {
+  width: 32px;
+  height: 32px;
+  background: var(--tertiary-fixed);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary-container);
+  flex-shrink: 0;
+}
+
+/* Nav list */
+.nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  cursor: pointer;
+  position: relative;
+  color: rgba(111, 251, 190, 0.45);
+  transition: color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+  border: none;
+  background: none;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.nav__item:hover {
+  color: var(--tertiary-fixed);
+  background: rgba(111, 251, 190, 0.05);
+}
+
+/* Active state: glass indicator + 2px left accent (per spec) */
+.nav__item--active {
+  color: var(--tertiary-fixed);
+  background: rgba(0, 0, 0, 0.10);
+}
+
+.nav__item--active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--tertiary-fixed);
+  border-radius: 0 2px 2px 0;
+}
+
+/* Nav icon */
+.nav__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav__icon ::ng-deep svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Label — hidden when collapsed */
+.nav__label {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.nav--expanded .nav__label {
+  opacity: 1;
+}
+
+.nav__spacer { flex: 1; }
+
+/* Toggle button */
+.nav__toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(111, 251, 190, 0.3);
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transition: color 0.15s;
+}
+
+.nav__toggle svg {
+  width: 14px;
+  height: 14px;
+}
+
+.nav__toggle:hover {
+  color: rgba(111, 251, 190, 0.7);
+}
+
+/* ── Main panel ── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* ── Header (masthead) ── */
+.header {
+  height: var(--header-height);
+  background: rgba(247, 249, 251, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  flex-shrink: 0;
+  /* tonal separation — no border per spec */
+  background-color: var(--surface);
+}
+
+.header__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-container);
+  letter-spacing: -0.01em;
+}
+
+.header__meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header__date {
+  font-size: 10px;
+  color: var(--on-surface-variant);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.header__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primary-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--tertiary-fixed);
+  cursor: pointer;
+}
+
+/* ── Ticker tape ── */
+.ticker {
+  height: var(--ticker-height);
+  background: var(--primary-container);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ticker__track {
+  display: flex;
+  align-items: center;
+  animation: crawl 32s linear infinite;
+  white-space: nowrap;
+}
+
+@keyframes crawl {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 18px;
+  border-right: 1px solid rgba(111, 251, 190, 0.08);
+}
+
+.ticker__sym {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--tertiary-fixed);
+  letter-spacing: 0.08em;
+}
+
+.ticker__price {
+  font-size: 10px;
+  color: rgba(111, 251, 190, 0.6);
+  letter-spacing: 0.03em;
+}
+
+.ticker__change {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.ticker__change--pos { color: var(--tertiary-fixed); }
+.ticker__change--neg { color: #ff6b6b; }
+
+/* ── Content area ── */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--surface-container-low);
+  padding: 24px;
+}
+
+/* Scrollbar styling (optional, matches the spec's density aesthetic) */
+.content::-webkit-scrollbar { width: 4px; }
+.content::-webkit-scrollbar-track { background: transparent; }
+.content::-webkit-scrollbar-thumb { background: var(--outline-variant); border-radius: 2px; }

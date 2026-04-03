@@ -1,0 +1,71 @@
+<div class="shell">
+
+  <!-- ═══ COLLAPSIBLE NAV ═══ -->
+  <nav class="nav" [class.nav--expanded]="navExpanded()">
+
+    <div class="nav__logo">
+      <span class="nav__logo-mark">HG</span>
+    </div>
+
+    <ul class="nav__list" role="navigation" aria-label="Main navigation">
+      @for (item of navItems; track item.route) {
+      <li class="nav__item" routerLinkActive="nav__item--active" [routerLink]="item.route">
+        <span class="nav__icon" [innerHTML]="item.icon" aria-hidden="true"></span>
+        <span class="nav__label">{{ item.label }}</span>
+      </li>
+      }
+    </ul>
+
+    <div class="nav__spacer"></div>
+
+    <button class="nav__toggle" (click)="toggleNav()"
+      [attr.aria-label]="navExpanded() ? 'Collapse navigation' : 'Expand navigation'"
+      [attr.aria-expanded]="navExpanded()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round">
+        <g [style.display]="navExpanded() ? 'block' : 'none'">
+          <polyline points="7,3 3,8 7,13"></polyline>
+          <polyline points="13,3 9,8 13,13"></polyline>
+        </g>
+        <g [style.display]="!navExpanded() ? 'block' : 'none'">
+          <polyline points="3,3 7,8 3,13"></polyline>
+          <polyline points="9,3 13,8 9,13"></polyline>
+        </g>
+      </svg>
+    </button>
+
+  </nav>
+
+  <div class="main">
+
+    <header class="header">
+      <span class="header__title">HyperGrid</span>
+      <div class="header__meta">
+        <time class="header__date" [dateTime]="today">{{ today | date: 'MMM dd, yyyy' | uppercase }}</time>
+        <div class="header__avatar" aria-label="User menu">DY</div>
+      </div>
+    </header>
+
+    <!-- Ticker Tape -->
+    <div class="ticker" role="marquee" aria-label="Live market data">
+      <div class="ticker__track">
+        @for (item of tickerItems.concat(tickerItems); track $index) {
+        <span class="ticker__item">
+          <span class="ticker__sym">{{ item.symbol }}</span>
+          <span class="ticker__price">{{ item.price }}</span>
+          <span class="ticker__change" [class.ticker__change--pos]="item.positive"
+            [class.ticker__change--neg]="!item.positive">
+            {{ item.positive ? '+' : '' }}{{ item.change }}
+          </span>
+        </span>
+        }
+      </div>
+    </div>
+
+    <!-- Router content -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+</div>
