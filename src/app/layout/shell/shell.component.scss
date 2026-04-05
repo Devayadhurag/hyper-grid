@@ -13,7 +13,7 @@
   background: var(--primary-container);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   padding: 16px 0;
   gap: 2px;
   transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -24,7 +24,6 @@
 
 .nav--expanded {
   width: var(--nav-width-expanded);
-  align-items: flex-start;
 }
 
 /* Logo mark */
