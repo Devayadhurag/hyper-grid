@@ -5,13 +5,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-button',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <p>
-      button works!
-    </p>
-  `,
-  styles: [
-  ]
+  templateUrl: './button.component.html',
+  styleUrl: './button.component.scss'
 })
 export class ButtonComponent {
 

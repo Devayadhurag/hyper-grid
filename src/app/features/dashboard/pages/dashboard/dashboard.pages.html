@@ -1,0 +1,71 @@
+    <div class="dashboard-toolbar">
+      <h1 class="page-title">Operations Dashboard</h1>
+      <div class="toolbar-actions">
+        <button class="btn btn-primary" (click)="isEditMode.set(!isEditMode())">
+          {{ isEditMode() ? 'Done' : 'Edit Dashboard' }}
+        </button>
+        <button class="btn btn-secondary" (click)="layoutService.resetToDefault()">Reset</button>
+      </div>
+    </div>
+
+    <main class="canvas" [class.edit-mode]="isEditMode()">
+      @if (isEditMode()) {
+        <div class="edit-banner">Editing Mode Active</div>
+      }
+
+      <div class="grid" cdkDropListGroup>
+        @for (row of gridRows(); track trackRow(row); let rIndex = $index) {
+          <div class="grid-row" 
+               cdkDropList 
+               cdkDropListOrientation="horizontal" 
+               [cdkDropListData]="rIndex"
+               (cdkDropListDropped)="onDrop($event, rIndex)">
+            
+            @for (widget of row; track widget.id) {
+              <div class="widget-cell widget-cell--{{widget.size}}" cdkDrag [cdkDragDisabled]="!isEditMode()">
+                
+                <div class="widget-placeholder" *cdkDragPlaceholder></div>
+                
+                @if (isEditMode()) {
+                  <div class="edit-controls">
+                    <div cdkDragHandle class="drag-handle">☰</div>
+                    <button class="btn-remove" (click)="layoutService.removeWidget(widget.id)">Remove</button>
+                    <select class="size-picker" [value]="widget.size" (change)="onSizeChange(widget.id, $event)">
+                      <option value="sm">SM</option>
+                      <option value="md">MD</option>
+                      <option value="lg">LG</option>
+                      <option value="xl">XL</option>
+                    </select>
+                  </div>
+                }
+
+                <div class="widget-header">
+                  <span class="icon">
+                    <lucide-icon [img]="getIcon(widget.icon)"></lucide-icon>
+                  </span>
+                  <div class="titles">
+                    <div class="title">{{ widget.title }}</div>
+                    <div class="subtitle">{{ widget.subtitle }}</div>
+                  </div>
+                </div>
+                
+                <ng-container [hgWidgetHost]="widget"></ng-container>
+                
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      @if (isEditMode()) {
+        <div class="add-panel">
+          <h3>Add Widget</h3>
+          <div class="add-buttons">
+            <button class="btn" (click)="addWidget('analytics-chart')">+ Chart</button>
+            <button class="btn" (click)="addWidget('data-grid')">+ Grid</button>
+            <button class="btn" (click)="addWidget('kpi-strip')">+ KPIs</button>
+            <button class="btn" (click)="addWidget('task-board')">+ Tasks</button>
+          </div>
+        </div>
+      }
+    </main>
